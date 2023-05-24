@@ -1,11 +1,13 @@
 from abc import ABC, abstractmethod
 from collections import deque
 from datetime import datetime, timezone
+import decimal
 import random
 from typing import Sequence, TypeVar
 from uuid import uuid4
 
 from synthwave import data
+from .utils import camel_case_to_snake_case
 
 T = TypeVar("T")
 
@@ -16,12 +18,44 @@ class Field(ABC):
         pass
 
 
+class Object(Field):
+    def __init__(self, **kwargs):
+        for name, field in kwargs.items():
+            self.__setattr__(name, field)
+
+    def sample(self):
+        fields = {
+            camel_case_to_snake_case(field_name): field.sample()
+            for field_name, field in vars(self).items()
+            if isinstance(field, Field)
+        }
+        return fields
+
+
+class Null(Field):
+    def __init__(self, probability: float):
+        self.probability = probability
+        self.not_null_field: Field | None = None
+
+    def __ror__(self, other: Field) -> Field:
+        self.not_null_field = other
+        return self
+
+    def sample(self):
+        if random.random() < self.probability:
+            return None
+        elif self.not_null_field is not None:
+            return self.not_null_field.sample()
+        else:
+            return None
+
+
 class OneOf(Field):
     def __init__(self, options: Sequence[T]):
         self.options = options
 
     def sample(self) -> T:
-        return random.choice(self.option)
+        return random.choice(self.options)
 
 
 class GivenName(Field):
@@ -57,6 +91,16 @@ class Float(Field):
         return random.random() * (self.high - self.low) + self.low
 
 
+class Decimal(Field):
+    def __init__(self, low=0.0, high=100.0, precision=2):
+        self.low, self.high, self.precision = low, high, precision
+
+    def sample(self):
+        decimal.getcontext().prec = self.precision
+        value = random.random() * (self.high - self.low) + self.low
+        return decimal.create_decimal_from_float(value)
+
+
 class Location(Field):
     def sample(self):
         return random.choice(data.locations)
@@ -68,7 +112,7 @@ class Timestamp(Field):
 
 
 class UUID(Field):
-    uuid_cache: deque[str] = deque([], maxlen=100)
+    uuid_cache: deque[str] = deque([], maxlen=1000)
 
     def __init__(self, repeat_prob=0.0):
         self.repeat_prob = repeat_prob
