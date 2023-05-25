@@ -6,6 +6,7 @@ from .utils import camel_case_to_snake_case
 
 
 class Event:
+    """ Class for designating events to be generated. Subclass this! """
     @classmethod
     def sample(cls):
         fields = {

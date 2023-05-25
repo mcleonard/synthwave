@@ -11,8 +11,8 @@ from typing import List
 class Data:
     given_name: List[str]
     family_name: List[str]
-    locations: List[str]
-
+    location: List[str]
+    email: List[str]
 
 data_json = pkgutil.get_data(__name__, "data.json")
 data: Data = Data(**json.loads(data_json))

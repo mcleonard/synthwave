@@ -1,4 +1,4 @@
-# File for defining events
+# Example file for defining events
 
 from synthwave import Event, field
 
@@ -38,3 +38,11 @@ class ImageExport(Event):
     user_id = field.UUID(repeat_prob=0.1)
     context = context
     properties = field.Object(format=field.OneOf(["jpeg", "png", "tiff", "gif"]))
+
+
+class ProductOrder(Event):
+    user_id = field.UUID(repeat_prob=0.2)
+    context = context
+    SKU = field.SKU()
+    price = field.Decimal(low=2, high=100, precision="1.00", cast_to=float)
+    quantity = field.Integer(low=1, high=32)

@@ -4,19 +4,15 @@ import pandas as pd
 given_names = []
 surnames = []
 
-given_df = pd.read_csv("dev_data/NationalNames.csv")
+with open("dev_data/names.txt") as f:
+    for line in f.readlines():
+        first, last = line.strip().split(" ")
+        given_names.append(first)
+        surnames.append(last)
 
-for gender in ("F", "M"):
-    given_names.extend(
-        given_df.query(f"Gender == '{gender}'")
-        .sort_values("Count", ascending=False)
-        .drop_duplicates(subset=["Name"])
-        .head(500)["Name"]
-        .tolist()
-    )
 
-surname_df = pd.read_csv("dev_data/Names_2010Census_Top1000.csv", nrows=1000)
-surnames.extend(surname_df["SURNAME"].apply(lambda s: s.lower().capitalize()).tolist())
+with open("dev_data/emails.txt", "r") as f:
+    emails = list(line.strip() for line in f.readlines())
 
 cities_df = pd.read_csv("dev_data/worldcities.csv", nrows=1000)
 cities = (
@@ -25,7 +21,13 @@ cities = (
     .tolist()
 )
 
-with open("synthwave/data.json", "w") as f:
+with open("../synthwave/data.json", "w") as f:
     json.dump(
-        {"given_name": given_names, "family_name": surnames, "locations": cities}, f
+        {
+            "given_name": given_names,
+            "family_name": surnames,
+            "location": cities,
+            "email": emails,
+        },
+        f,
     )

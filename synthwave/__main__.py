@@ -13,7 +13,9 @@ import validators
 import synthwave
 
 parser = ArgumentParser()
-parser.add_argument("-e", "--events", type=str, help="Path to event definitions")
+parser.add_argument(
+    "-e", "--events", required=True, type=str, help="Path to event definitions"
+)
 parser.add_argument(
     "-o",
     "--output",
@@ -43,6 +45,7 @@ user_events = {
 
 stream = synthwave.Stream(list(user_events.values()))
 
+print("Starting Synthwave. Press Ctrl + C to stop running.\n")
 for event in stream.generate():
     if args.output == "stdout":
         print(event)
@@ -52,4 +55,8 @@ for event in stream.generate():
         with open(args.output, "a") as f:
             f.write(json.dumps(event) + "\n")
 
-    sleep(args.interval)
+    # Stop running when the user presses Ctrl + C
+    try:
+        sleep(args.interval)
+    except KeyboardInterrupt:
+        break
