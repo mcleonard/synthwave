@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "synthwave"
-version = "0.1.5"
+version = "0.1.6"
 description = ""
 authors = ["Mat Leonard <leonard.mat@gmail.com>"]
 readme = "README.md"
-license = "MIT"
-homepage = "https://mcleonard.github.com/synthwave"
+license = "BSD 3-Clause"
+homepage = "https://mcleonard.github.io/synthwave/html/index.html"
 repository = "https://github.com/mcleonard/synthwave"
 
 [tool.poetry.dependencies]
