@@ -88,12 +88,13 @@ You must point to a file where your events are defined ``-e filename.py``.
 
 * ``-i``, ``--interval``: Time interval between events in seconds.
  
-Fields Reference 
+Further Learning
 ----------------
 
 .. toctree::
    :maxdepth: 2
 
+   example
    field
 
 
