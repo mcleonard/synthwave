@@ -4,6 +4,9 @@ version = "0.1.4"
 description = ""
 authors = ["Mat Leonard <leonard.mat@gmail.com>"]
 readme = "README.md"
+license = "MIT"
+homepage = "https://mcleonard.github.com/synthwave"
+repository = "https://github.com/mcleonard/synthwave"
 
 [tool.poetry.dependencies]
 python = "^3.11"

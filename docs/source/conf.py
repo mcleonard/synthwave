@@ -14,7 +14,7 @@ sys.path.append("..")
 project = "Synthwave"
 copyright = "2023, Mat Leonard"
 author = "Mat Leonard"
-release = "0.1.4"
+release = "0.1.5"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
