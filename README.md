@@ -24,17 +24,22 @@ Define the events you want generated in a Python file. See `example.py` for an e
 
 ```python
 class AccountCreated(Event):
-    user_id = field.UUID(repeat_prob=0.5)
-    first_name = field.GivenName()
-    last_name = field.FamilyName()
-    age = field.Integer(13, 95)
-    email_address = field.EmailAddress()
-    location = field.Location()
+    user_id = field.UUID()
+    properties = field.Object(
+        first_name=field.GivenName(),
+        last_name=field.FamilyName(),
+        age=field.Integer(13, 95),
+        email_address=field.EmailAddress(),
+        location=field.Location() | field.Null(0.5),
+    )
+
 
 class PageView(Event):
-    user_id = field.UUID(repeat_prob=0.5)
-    page_url = field.URL()
-    referring_url = field.URL("google.com")
+    user_id = field.UUID(repeat_prob=0.1)
+    properties = field.Object(
+        page_url=field.URL()
+        referring_url=field.URL("google.com")
+    )
 ```
 
 Then start the generation, in your terminal:
