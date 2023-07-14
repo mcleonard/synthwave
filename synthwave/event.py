@@ -1,14 +1,20 @@
+from collections import defaultdict
 from datetime import datetime, timezone
+from typing import Any, List
 from uuid import uuid4
 
 from .field import Field
 from .utils import camel_case_to_snake_case
 
+Sample = dict[str, Any]
+
 
 class Event:
-    """ Class for designating events to be generated. Subclass this! """
+    """Class for designating events to be generated. Subclass this!"""
+
     @classmethod
-    def sample(cls):
+    def sample(cls) -> Sample:
+        """Sample one instance of event data"""
         fields = {
             camel_case_to_snake_case(field_name): field.sample()
             for field_name, field in vars(cls).items()
@@ -22,3 +28,22 @@ class Event:
         }
         event_data.update(fields)
         return event_data
+
+    @classmethod
+    def sample_many(cls, n: int) -> List[Sample]:
+        """Sample many instances of the event data"""
+        return [cls.sample() for _ in range(n)]
+
+    @classmethod
+    def sample_table(cls, n_rows: int) -> dict[str, list]:
+        """Sample event data as a columnar data structure. The structure is a dictionary of lists,
+        each list corresponds to a column, each column being an event field."""
+
+        samples = cls.sample_many(n_rows)
+        table = defaultdict(list)
+
+        for sample in samples:
+            for field, value in sample.items():
+                table[field].append(value)
+
+        return table
