@@ -51,6 +51,38 @@ class Object(Field):
         }
         return fields
 
+class Array(Field):
+    """ 
+    A field representing an an array of fields. Length of the generated array is 
+    random and controlled by the min_size and max_size parameters.
+    
+    .. code-block:: python
+
+        from synthwave import Event, field
+        
+        class Example(Event):
+            people = field.Array(
+                field.Object(
+                    name=field.FullName(),
+                    age=field.Integer(0, 120)
+                )   
+            )
+            ids = field.Array(field.UUID())
+
+    :param field: Field to generate in the array
+    :param min_size: Minimum length of the generated array
+    :param max_size: Maximium length of the generated array
+    """
+
+    def __init__(self, field: Field, min_size=1, max_size=2):
+        self.field = field
+        self.min_size = min_size
+        self.max_size = max_size
+
+    def sample(self):
+        n_items = random.randrange(self.min_size, self.max_size + 1)
+        return [self.field.sample() for _ in range(n_items)]
+
 
 class Null(Field):
     """
