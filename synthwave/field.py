@@ -229,6 +229,23 @@ class Integer(Field):
 
     def schema(self) -> dict:
         return make_schema("integer")
+    
+class Long(Field):
+    """
+    Returns a random integer within a range ``low`` to ``high``, same as the 
+    Integer field, but designated as a 'long' type in the schema.
+
+    Defaults to return integers from 0 to 100
+    """
+
+    def __init__(self, low: int = 0, high: int = 100):
+        self.low, self.high = low, high
+
+    def sample(self):
+        return random.randint(self.low, self.high)
+
+    def schema(self) -> dict:
+        return make_schema("long")
 
 
 class Float(Field):
