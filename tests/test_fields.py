@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from decimal import Decimal
 import string
 from urllib.parse import urlparse
@@ -120,6 +120,14 @@ def test_timestamp():
 
     assert (datetime.now(timezone.utc).timestamp() - sample["timestamp"]) < 1
 
+    
+def test_timestamp_datetime():
+    class TestTimestamp(Event):
+        timestamp = field.Timestamp(as_datetime=True)
+
+    sample = TestTimestamp.sample()
+
+    assert isinstance(sample["timestamp"], datetime)
 
 def test_sku():
     class TestSKU(Event):

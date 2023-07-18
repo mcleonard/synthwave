@@ -229,10 +229,11 @@ class Integer(Field):
 
     def schema(self) -> dict:
         return make_schema("integer")
-    
+
+
 class Long(Field):
     """
-    Returns a random integer within a range ``low`` to ``high``, same as the 
+    Returns a random integer within a range ``low`` to ``high``, same as the
     Integer field, but designated as a 'long' type in the schema.
 
     Defaults to return integers from 0 to 100
@@ -309,10 +310,11 @@ class Location(Field):
 
 class Timestamp(Field):
     """
-    Returns a timestamp in UTC
+    Returns a POSIX timestamp in UTC, as a float by default
 
     :param start_time: (optional) datetime object designating the earliest time to be generated
     :param end_time: (optional) datetime object designating the latest time to be generated
+    :param as_datetime: (optional) return the timestamp as a datetime object
 
     If both start_time and end_time are left as None, the timestamp returned is the current time when generated.
     """
@@ -321,20 +323,30 @@ class Timestamp(Field):
         self,
         start_time: datetime | None = None,
         end_time: datetime | None = None,
+        as_datetime: bool = False,
     ):
         self.start_time = start_time
         self.end_time = end_time
+        self.as_datetime = as_datetime
 
     def sample(self):
         if self.start_time is None and self.end_time is None:
-            return datetime.now(timezone.utc).timestamp()
+            return (
+                datetime.now(timezone.utc)
+                if self.as_datetime
+                else datetime.now(timezone.utc).timestamp()
+            )
 
         if self.start_time is not None and self.end_time is None:
             time_range = datetime.now() - self.start_time
             rand_time = timedelta(
-                seconds=random.randrange(0, int(time_range.total_seconds))
+                seconds=random.randrange(0, int(time_range.total_seconds()))
             )
-            return self.start_time + rand_time
+            return (
+                (self.start_time + rand_time)
+                if self.as_datetime
+                else (self.start_time + rand_time).timestamp()
+            )
 
         if self.end_time is not None and self.start_time is None:
             raise ValueError("end_time is only used if a start_time is also set")
@@ -342,9 +354,13 @@ class Timestamp(Field):
         if self.start_time is not None and self.end_time is not None:
             time_range = self.end_time - self.start_time
             rand_time = timedelta(
-                seconds=random.randrange(0, int(time_range.total_seconds))
+                seconds=random.randrange(0, int(time_range.total_seconds()))
             )
-            return self.start_time + rand_time
+            return (
+                (self.start_time + rand_time)
+                if self.as_datetime
+                else (self.start_time + rand_time).timestamp()
+            )
 
     def schema(self) -> dict:
         return make_schema("timestamp")
