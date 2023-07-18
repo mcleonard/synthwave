@@ -118,9 +118,7 @@ def test_timestamp():
 
     sample = TestTimestamp.sample()
 
-    assert (
-        datetime.now(timezone.utc) - datetime.fromisoformat(sample["timestamp"])
-    ) < timedelta(seconds=1)
+    assert (datetime.now(timezone.utc).timestamp() - sample["timestamp"]) < 1
 
 
 def test_sku():
@@ -134,6 +132,7 @@ def test_sku():
         ch in set(string.ascii_uppercase + string.digits) for ch in sample["sku"]
     )
 
+
 def test_UUID():
     class TestUUID(Event):
         uuid = field.UUID(repeat_prob=0.2)
@@ -144,6 +143,7 @@ def test_UUID():
     assert len(set(s["uuid"] for s in samples)) < len(samples)
     assert isinstance(samples[0]["uuid"], str)
 
+
 def test_email():
     class TestEmail(Event):
         email = field.EmailAddress()
@@ -151,6 +151,7 @@ def test_email():
     sample = TestEmail.sample()
 
     assert sample["email"] in set(data.email)
+
 
 def test_url():
     class TestURL(Event):

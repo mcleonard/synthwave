@@ -17,5 +17,5 @@ class Data:
 data_json = pkgutil.get_data(__name__, "data.json")
 data: Data = Data(**json.loads(data_json))
 
-from .event import Event  # noqa: F401
+from .event import Event, DataModel  # noqa: F401
 from .stream import Stream  # noqa: F401
