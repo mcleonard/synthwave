@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Example Event File" href="example.html" />
 
     <!-- Generated with Sphinx 7.0.1 and Furo 2023.05.20 -->
-        <title>Fields - Synthwave 0.1.5 documentation</title>
+        <title>Fields - Synthwave 0.1.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Synthwave 0.1.5 documentation</div></a>
+      <a href="index.html"><div class="brand">Synthwave 0.1.7 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">Synthwave 0.1.5 documentation</span>
+  <span class="sidebar-brand-text">Synthwave 0.1.7 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -211,6 +211,40 @@
 <section id="module-synthwave.field">
 <span id="available-fields"></span><h2>Available Fields<a class="headerlink" href="#module-synthwave.field" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="synthwave.field.Array">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">Array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#synthwave.field.Field" title="synthwave.field.Field"><span class="pre">Field</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.Array" title="Permalink to this definition">#</a></dt>
+<dd><p>A field representing an an array of fields. Length of the generated array is
+random and controlled by the min_size and max_size parameters.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">synthwave</span> <span class="kn">import</span> <span class="n">Event</span><span class="p">,</span> <span class="n">field</span>
+
+<span class="k">class</span> <span class="nc">Example</span><span class="p">(</span><span class="n">Event</span><span class="p">):</span>
+    <span class="n">people</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span>
+        <span class="n">field</span><span class="o">.</span><span class="n">Object</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">field</span><span class="o">.</span><span class="n">FullName</span><span class="p">(),</span>
+            <span class="n">age</span><span class="o">=</span><span class="n">field</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">UUID</span><span class="p">())</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> – Field to generate in the array</p></li>
+<li><p><strong>min_size</strong> – Minimum length of the generated array</p></li>
+<li><p><strong>max_size</strong> – Maximium length of the generated array</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.Array.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.Array.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Return a dictionary representing this fields schema</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="synthwave.field.Decimal">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">Decimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">low</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1.00'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cast_to</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.Decimal" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a random Decimal within a range <code class="docutils literal notranslate"><span class="pre">low</span></code> to <code class="docutils literal notranslate"><span class="pre">high</span></code>. Decimals are
@@ -226,18 +260,36 @@ better able to represent values like prices compared to floats.</p>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.Decimal.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.Decimal.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="synthwave.field.EmailAddress">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">EmailAddress</span></span><a class="headerlink" href="#synthwave.field.EmailAddress" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a randomly chosen email address.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.EmailAddress.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.EmailAddress.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="synthwave.field.FamilyName">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">FamilyName</span></span><a class="headerlink" href="#synthwave.field.FamilyName" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns random family name (“last name”, “surname”).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.FamilyName.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.FamilyName.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -245,6 +297,12 @@ better able to represent values like prices compared to floats.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">Field</span></span><a class="headerlink" href="#synthwave.field.Field" title="Permalink to this definition">#</a></dt>
 <dd><p>Abstract base class for fields. Must implement a <code class="docutils literal notranslate"><span class="pre">sample</span></code> method to
 be included in event data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.Field.schema">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.Field.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -252,18 +310,36 @@ be included in event data.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">Float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">low</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.Float" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a random float within a range <code class="docutils literal notranslate"><span class="pre">low</span></code> to <code class="docutils literal notranslate"><span class="pre">high</span></code>.</p>
 <p>Defaults to return floats from 0 to 100</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.Float.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.Float.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="synthwave.field.FullName">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">FullName</span></span><a class="headerlink" href="#synthwave.field.FullName" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a random full name.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.FullName.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.FullName.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="synthwave.field.GivenName">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">GivenName</span></span><a class="headerlink" href="#synthwave.field.GivenName" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a random given (“first”) name.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.GivenName.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.GivenName.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -271,12 +347,38 @@ be included in event data.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">Integer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">low</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.Integer" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a random integer within a range <code class="docutils literal notranslate"><span class="pre">low</span></code> to <code class="docutils literal notranslate"><span class="pre">high</span></code>.</p>
 <p>Defaults to return integers from 0 to 100</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.Integer.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.Integer.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="synthwave.field.Location">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">Location</span></span><a class="headerlink" href="#synthwave.field.Location" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a random city like <code class="docutils literal notranslate"><span class="pre">&quot;San</span> <span class="pre">Francisco,</span> <span class="pre">United</span> <span class="pre">States&quot;</span></code>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.Location.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.Location.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthwave.field.Long">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">Long</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">low</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.Long" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a random integer within a range <code class="docutils literal notranslate"><span class="pre">low</span></code> to <code class="docutils literal notranslate"><span class="pre">high</span></code>, same as the
+Integer field, but designated as a ‘long’ type in the schema.</p>
+<p>Defaults to return integers from 0 to 100</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.Long.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.Long.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -287,6 +389,12 @@ be included in event data.</p>
 return null values:</p>
 <p><code class="docutils literal notranslate"><span class="pre">field.Location()</span> <span class="pre">|</span> <span class="pre">field.Null(0.2)</span></code></p>
 <p>will return None as the field value 20% of the time.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.Null.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.Null.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -302,24 +410,58 @@ return null values:</p>
     <span class="p">)</span>
 </pre></div>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.Object.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.Object.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="synthwave.field.OneOf">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">OneOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.OneOf" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">OneOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">OneOfType</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.OneOf" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns one of the options in the input sequence.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.OneOf.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.OneOf.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="synthwave.field.SKU">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">SKU</span></span><a class="headerlink" href="#synthwave.field.SKU" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns a random string consisting of 8 alpha-numeric characters to be used as a SKU.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.SKU.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.SKU.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="synthwave.field.Timestamp">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">Timestamp</span></span><a class="headerlink" href="#synthwave.field.Timestamp" title="Permalink to this definition">#</a></dt>
-<dd><p>Returns the timestamp when the event was generated in UTC, with millisecond precision</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthwave.field.</span></span><span class="sig-name descname"><span class="pre">Timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_isoformat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#synthwave.field.Timestamp" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a POSIX timestamp in UTC, as a float by default</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_time</strong> – (optional) datetime object designating the earliest time to be generated</p></li>
+<li><p><strong>end_time</strong> – (optional) datetime object designating the latest time to be generated</p></li>
+<li><p><strong>as_datetime</strong> – (optional) return the timestamp as a datetime object</p></li>
+</ul>
+</dd>
+</dl>
+<p>If both start_time and end_time are left as None, the timestamp returned is the current time when generated.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.Timestamp.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.Timestamp.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -331,6 +473,12 @@ return null values:</p>
 <dd class="field-odd"><p><strong>domain</strong> – Use to specify the URL domain</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.URL.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.URL.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -345,6 +493,12 @@ recently generated UUIDs.</p>
 <dd class="field-odd"><p><strong>repeat_prob</strong> – Probability to repeat a UUID.</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthwave.field.UUID.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#synthwave.field.UUID.schema" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a dictionary representing the field schema</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -399,22 +553,78 @@ recently generated UUIDs.</p>
             <ul>
 <li><a class="reference internal" href="#">Fields</a><ul>
 <li><a class="reference internal" href="#module-synthwave.field">Available Fields</a><ul>
-<li><a class="reference internal" href="#synthwave.field.Decimal"><code class="docutils literal notranslate"><span class="pre">Decimal</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.EmailAddress"><code class="docutils literal notranslate"><span class="pre">EmailAddress</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.FamilyName"><code class="docutils literal notranslate"><span class="pre">FamilyName</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.Field"><code class="docutils literal notranslate"><span class="pre">Field</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.Float"><code class="docutils literal notranslate"><span class="pre">Float</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.FullName"><code class="docutils literal notranslate"><span class="pre">FullName</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.GivenName"><code class="docutils literal notranslate"><span class="pre">GivenName</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.Integer"><code class="docutils literal notranslate"><span class="pre">Integer</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.Location"><code class="docutils literal notranslate"><span class="pre">Location</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.Null"><code class="docutils literal notranslate"><span class="pre">Null</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.Object"><code class="docutils literal notranslate"><span class="pre">Object</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.OneOf"><code class="docutils literal notranslate"><span class="pre">OneOf</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.SKU"><code class="docutils literal notranslate"><span class="pre">SKU</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.Timestamp"><code class="docutils literal notranslate"><span class="pre">Timestamp</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.URL"><code class="docutils literal notranslate"><span class="pre">URL</span></code></a></li>
-<li><a class="reference internal" href="#synthwave.field.UUID"><code class="docutils literal notranslate"><span class="pre">UUID</span></code></a></li>
+<li><a class="reference internal" href="#synthwave.field.Array"><code class="docutils literal notranslate"><span class="pre">Array</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.Array.schema"><code class="docutils literal notranslate"><span class="pre">Array.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.Decimal"><code class="docutils literal notranslate"><span class="pre">Decimal</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.Decimal.schema"><code class="docutils literal notranslate"><span class="pre">Decimal.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.EmailAddress"><code class="docutils literal notranslate"><span class="pre">EmailAddress</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.EmailAddress.schema"><code class="docutils literal notranslate"><span class="pre">EmailAddress.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.FamilyName"><code class="docutils literal notranslate"><span class="pre">FamilyName</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.FamilyName.schema"><code class="docutils literal notranslate"><span class="pre">FamilyName.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.Field"><code class="docutils literal notranslate"><span class="pre">Field</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.Field.schema"><code class="docutils literal notranslate"><span class="pre">Field.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.Float"><code class="docutils literal notranslate"><span class="pre">Float</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.Float.schema"><code class="docutils literal notranslate"><span class="pre">Float.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.FullName"><code class="docutils literal notranslate"><span class="pre">FullName</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.FullName.schema"><code class="docutils literal notranslate"><span class="pre">FullName.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.GivenName"><code class="docutils literal notranslate"><span class="pre">GivenName</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.GivenName.schema"><code class="docutils literal notranslate"><span class="pre">GivenName.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.Integer"><code class="docutils literal notranslate"><span class="pre">Integer</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.Integer.schema"><code class="docutils literal notranslate"><span class="pre">Integer.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.Location"><code class="docutils literal notranslate"><span class="pre">Location</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.Location.schema"><code class="docutils literal notranslate"><span class="pre">Location.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.Long"><code class="docutils literal notranslate"><span class="pre">Long</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.Long.schema"><code class="docutils literal notranslate"><span class="pre">Long.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.Null"><code class="docutils literal notranslate"><span class="pre">Null</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.Null.schema"><code class="docutils literal notranslate"><span class="pre">Null.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.Object"><code class="docutils literal notranslate"><span class="pre">Object</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.Object.schema"><code class="docutils literal notranslate"><span class="pre">Object.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.OneOf"><code class="docutils literal notranslate"><span class="pre">OneOf</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.OneOf.schema"><code class="docutils literal notranslate"><span class="pre">OneOf.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.SKU"><code class="docutils literal notranslate"><span class="pre">SKU</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.SKU.schema"><code class="docutils literal notranslate"><span class="pre">SKU.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.Timestamp"><code class="docutils literal notranslate"><span class="pre">Timestamp</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.Timestamp.schema"><code class="docutils literal notranslate"><span class="pre">Timestamp.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.URL"><code class="docutils literal notranslate"><span class="pre">URL</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.URL.schema"><code class="docutils literal notranslate"><span class="pre">URL.schema()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synthwave.field.UUID"><code class="docutils literal notranslate"><span class="pre">UUID</span></code></a><ul>
+<li><a class="reference internal" href="#synthwave.field.UUID.schema"><code class="docutils literal notranslate"><span class="pre">UUID.schema()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
