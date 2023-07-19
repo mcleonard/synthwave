@@ -324,29 +324,25 @@ class Timestamp(Field):
         start_time: datetime | None = None,
         end_time: datetime | None = None,
         as_datetime: bool = False,
+        as_isoformat: bool = False
     ):
         self.start_time = start_time
         self.end_time = end_time
         self.as_datetime = as_datetime
+        self.as_isoformat = as_isoformat
 
     def sample(self):
+        timestamp: datetime
+
         if self.start_time is None and self.end_time is None:
-            return (
-                datetime.now(timezone.utc)
-                if self.as_datetime
-                else datetime.now(timezone.utc).timestamp()
-            )
+            timestamp = datetime.now(timezone.utc)
 
         if self.start_time is not None and self.end_time is None:
             time_range = datetime.now() - self.start_time
             rand_time = timedelta(
                 seconds=random.randrange(0, int(time_range.total_seconds()))
             )
-            return (
-                (self.start_time + rand_time)
-                if self.as_datetime
-                else (self.start_time + rand_time).timestamp()
-            )
+            timestamp = self.start_time + rand_time
 
         if self.end_time is not None and self.start_time is None:
             raise ValueError("end_time is only used if a start_time is also set")
@@ -356,14 +352,22 @@ class Timestamp(Field):
             rand_time = timedelta(
                 seconds=random.randrange(0, int(time_range.total_seconds()))
             )
-            return (
-                (self.start_time + rand_time)
-                if self.as_datetime
-                else (self.start_time + rand_time).timestamp()
-            )
+            timestamp = self.start_time + rand_time
+            
+        if self.as_datetime:
+            return timestamp
+        elif self.as_isoformat:
+            return timestamp.isoformat()
+        else:
+            return timestamp.timestamp()
 
     def schema(self) -> dict:
-        return make_schema("timestamp")
+        if self.as_datetime:
+            return make_schema("timestamp")
+        elif self.as_isoformat:
+            return make_schema("string")
+        else:
+            return make_schema("float")
 
 
 class SKU(Field):
