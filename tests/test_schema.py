@@ -116,7 +116,7 @@ def test_pyspark():
                                 "metadata": {},
                                 "name": "last_activity_at",
                                 "nullable": False,
-                                "type": "timestamp",
+                                "type": "float",
                             },
                             {
                                 "metadata": {},

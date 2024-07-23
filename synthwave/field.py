@@ -308,13 +308,14 @@ class Location(Field):
         return make_schema("string")
 
 
-class Timestamp(Field):
-    """
-    Returns a POSIX timestamp in UTC, as a float by default
+class DateTime(Field):
+    """ "
+    Returns a random datetime as an ISO 8601 string
 
     :param start_time: (optional) datetime object designating the earliest time to be generated
     :param end_time: (optional) datetime object designating the latest time to be generated
-    :param as_datetime: (optional) return the timestamp as a datetime object
+    :param as_datetime: (optional) return as a datetime object
+    :param format: (optional) format string using strftime format
 
     If both start_time and end_time are left as None, the timestamp returned is the current time when generated.
     """
@@ -324,12 +325,12 @@ class Timestamp(Field):
         start_time: datetime | None = None,
         end_time: datetime | None = None,
         as_datetime: bool = False,
-        as_isoformat: bool = False
+        format: str | None = None,
     ):
         self.start_time = start_time
         self.end_time = end_time
         self.as_datetime = as_datetime
-        self.as_isoformat = as_isoformat
+        self.format = format
 
     def sample(self):
         timestamp: datetime
@@ -353,21 +354,47 @@ class Timestamp(Field):
                 seconds=random.randrange(0, int(time_range.total_seconds()))
             )
             timestamp = self.start_time + rand_time
-            
+
         if self.as_datetime:
             return timestamp
-        elif self.as_isoformat:
-            return timestamp.isoformat()
+        elif self.format:
+            return timestamp.strftime(self.format)
         else:
-            return timestamp.timestamp()
+            return timestamp.isoformat()
 
     def schema(self) -> dict:
         if self.as_datetime:
             return make_schema("timestamp")
-        elif self.as_isoformat:
-            return make_schema("string")
         else:
-            return make_schema("float")
+            return make_schema("string")
+
+
+class Timestamp(Field):
+    """
+    Returns a POSIX timestamp in UTC, as a float by default
+
+    :param start_time: (optional) datetime object designating the earliest time to be generated
+    :param end_time: (optional) datetime object designating the latest time to be generated
+
+    If both start_time and end_time are left as None, the timestamp returned is the current time when generated.
+    """
+
+    def __init__(
+        self,
+        start_time: datetime | None = None,
+        end_time: datetime | None = None,
+    ):
+        self.start_time = start_time
+        self.end_time = end_time
+        self.datetime_sample = DateTime(start_time, end_time, as_datetime=True).sample
+
+    def sample(self):
+        timestamp = self.datetime_sample()
+
+        return timestamp.timestamp()
+
+    def schema(self) -> dict:
+        return make_schema("float")
 
 
 class SKU(Field):
@@ -436,9 +463,11 @@ class URL(Field):
         return "/".join(
             [
                 "https:/",
-                random.choice(("example.com", "cool.com", "wow.app", "yup.ai"))
-                if self.domain is None
-                else self.domain,
+                (
+                    random.choice(("example.com", "cool.com", "wow.app", "yup.ai"))
+                    if self.domain is None
+                    else self.domain
+                ),
                 random.choice(("perpetual", "generous", "sequentially", "ponderous")),
                 random.choice(("vociferous", "arbitrary", "obsequious", "achingly")),
                 random.choice(("obscure", "egregious", "syzygy", "zenith")),

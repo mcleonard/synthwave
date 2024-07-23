@@ -120,14 +120,20 @@ def test_timestamp():
 
     assert (datetime.now(timezone.utc).timestamp() - sample["timestamp"]) < 1
 
-    
-def test_timestamp_datetime():
-    class TestTimestamp(Event):
-        timestamp = field.Timestamp(as_datetime=True)
 
-    sample = TestTimestamp.sample()
+def test_datetime():
+    class TestDateTime(Event):
+        datetime_as_str = field.DateTime()
+        datetime_as_dt = field.DateTime(as_datetime=True)
 
-    assert isinstance(sample["timestamp"], datetime)
+    sample = TestDateTime.sample()
+    assert isinstance(sample["datetime_as_dt"], datetime)
+    assert isinstance(sample["datetime_as_str"], str)
+    assert (
+        datetime.now(timezone.utc).timestamp()
+        - datetime.fromisoformat(sample["datetime_as_str"]).timestamp()
+    ) < 1
+
 
 def test_sku():
     class TestSKU(Event):
