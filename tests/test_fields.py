@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from decimal import Decimal
 import string
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlsplit, parse_qs
 
 from synthwave import data, Event, field
 
@@ -175,3 +175,18 @@ def test_url():
 
     # test will fail if this raises an exception
     urlparse(sample["url"])
+
+    class TestURL2(Event):
+        url = field.URL(domain="google.com", path="search", params={"gid": field.Hex(), "query": field.Literal("query_string")})
+
+    sample = TestURL2.sample()
+    urlparse(sample["url"])
+    
+    _, netloc, path, query, _ = urlsplit(sample["url"])
+    print(sample["url"])
+    assert netloc == "google.com"
+    assert path == "/search"
+
+    parsed_query = parse_qs(query)
+    assert parsed_query["query"][0] == "query_string"
+    assert len(parsed_query["gid"][0]) == 30
