@@ -5,7 +5,9 @@ import decimal
 import random
 import string
 from typing import Dict, List, Sequence, TypeVar
+import urllib.parse
 from uuid import uuid4
+import urllib
 
 from synthwave import data
 from .utils import camel_case_to_snake_case, make_schema
@@ -296,6 +298,42 @@ class Decimal(Field):
         return make_schema(self.type.__name__ if self.type is not None else "float")
 
 
+class Hex(Field):
+    """
+    Returns a random hex string
+    """
+
+    def __init__(self, length: int = 30):
+        self.length = length
+
+    def sample(self):
+        return f"{random.randrange(16**self.length):x}"
+    
+    def schema(self) -> dict:
+        return make_schema("string")
+    
+class Literal(Field): 
+    """
+    Returns a constant literal value. Useful if you want a constant value where a Field is required.
+    """
+
+    def __init__(self, value: int | float | str):
+        if not isinstance(value, (int, float, str)):
+            raise ValueError("Literal field can only take an int, float, or string value")
+        
+        self.value = value
+    
+    def sample(self):
+        return self.value
+    
+    def schema(self) -> dict:
+        if isinstance(self.value, int):
+            return make_schema("integer")
+        elif isinstance(self.value, float):
+            return make_schema("float")
+        elif isinstance(self.value, str):
+            return make_schema("string")
+
 class Location(Field):
     """
     Returns a random city like ``"San Francisco, United States"``.
@@ -456,23 +494,40 @@ class URL(Field):
     :param domain: Use to specify the URL domain
     """
 
-    def __init__(self, domain: str | None = None):
+    def __init__(
+        self,
+        domain: str | Field | None = None,
+        path: str | Field | None = None,
+        params: Dict[str, Field] | None = None,
+    ):
         self.domain = domain
+        self.path = path
+        self.params = params
 
     def sample(self):
-        return "/".join(
-            [
-                "https:/",
-                (
-                    random.choice(("example.com", "cool.com", "wow.app", "yup.ai"))
-                    if self.domain is None
-                    else self.domain
-                ),
-                random.choice(("perpetual", "generous", "sequentially", "ponderous")),
-                random.choice(("vociferous", "arbitrary", "obsequious", "achingly")),
-                random.choice(("obscure", "egregious", "syzygy", "zenith")),
-            ]
-        )
+        domain: str
+        if self.domain is None:
+            domain = "example.com"
+        elif isinstance(self.domain, str):
+            domain = self.domain
+        elif isinstance(self.domain, Field):
+            domain = self.domain.sample()
+
+        path: str
+        if self.path is None:
+            path = "example_path"
+        elif isinstance(self.path, str):
+            path = self.path
+        elif isinstance(self.path, Field):
+            path = self.path.sample()
+        
+        url = f"https://{domain}/{path}"
+
+        if self.params:
+            params = {key: field.sample() for key, field in self.params.items()}
+            url = f"{url}?{urllib.parse.urlencode(params)}"
+
+        return url
 
     def schema(self) -> dict:
         return make_schema("string")
